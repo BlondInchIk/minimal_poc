@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: dz10-web
+    ports:
+      - "8080:8000"
+    restart: unless-stopped
+
+  poc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dz10-poc
+    depends_on:
+      - web
+    environment:
+      - TARGET_URL=http://web:8000
